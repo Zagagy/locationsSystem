@@ -1,0 +1,70 @@
+.mat-sort-header-container, .mat-cell, mat-header-cell {
+  display:flex;
+  justify-content:center;
+}
+
+.filter-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  height: 80vh;
+  width: 29vw;
+  border-radius: 5px;
+}
+
+
+.cell-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 5vw;
+  cursor:pointer;
+}
+
+.filter-header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.table-row {
+  cursor:pointer;
+}
+.table-row:hover {
+  background-color:#b9e8a7;
+}
+
+.save-all-btn {
+  position: absolute;
+  top: 2vh;
+  right: 1vw;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 5px 7px 0 rgba(0,0,0,0.2), 0 6px 6px 0 rgba(0,0,0,0.19);
+  color: #25af85;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.save-all-btn:hover {
+  transform: scale(1.5);
+}
+
+.help-icon {
+  left: 0.5vw;
+  top: 0.7vw;
+  position: absolute;
+}

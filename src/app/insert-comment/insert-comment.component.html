@@ -1,0 +1,14 @@
+<div class="dialog-content" align="center">
+  <form [formGroup]="form">
+  <mat-form-field class="commentsField">
+    <input matInput type="text" name="comment" [(ngModel)]="content"  placeholder="Comments" formControlName="comment"  maxlength="50" >
+  </mat-form-field>
+  <br>
+  <div mat-button class="btn" align="center" (click)="apply()">
+    Apply
+  </div>
+  <div mat-button class="btn" align="center" (click)="cancel()">
+    Cancel
+  </div>
+  </form>
+</div>

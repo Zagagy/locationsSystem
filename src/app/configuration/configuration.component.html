@@ -1,0 +1,19 @@
+<app-help-icon (click)="helpService.raiseHelp('customize')"></app-help-icon>
+<div class="dialog-content" align="center">
+  <mat-card-title>
+    <h2 mat-dialog-title>{{userDataService.getUserName()}}'s Custom Theme:</h2>
+  </mat-card-title>
+
+  <form [formGroup]="form">
+    <div class="theme-icon" *ngFor="let currTheme of stylesService.getThemes();let i=index" (click)="setTheme(currTheme)">
+      <img [src]="'/assets/img/themes/'+currTheme+'.png'" [class.selected]="currTheme==theme" />
+    </div>
+    <br>
+    <div mat-button class="btn" align="center" (click)="apply()">
+      Apply
+    </div>
+    <div mat-button class="btn" align="center" (click)="cancel()">
+      Cancel
+    </div>
+  </form>
+</div>

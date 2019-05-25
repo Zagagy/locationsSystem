@@ -1,0 +1,10 @@
+.help-ico {
+  position: absolute;
+  cursor:pointer;
+  transition: all .2s ease-in-out;
+}
+
+.help-ico:hover {
+  color: #18698c;
+  transform: scale(1.2);
+}

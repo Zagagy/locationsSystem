@@ -1,0 +1,9 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <mat-icon class="user-icon">account_circle</mat-icon>
+    <h3 class="toolbar-header">{{userDataService.getUserName()}}</h3>
+    <span class="fill-space"></span>
+    <mat-icon title="Customize View"class="right-icon" (click)="openConf()" >tune</mat-icon>
+    <mat-icon class="right-icon" title="Logout" (click)="logout()">exit_to_app</mat-icon>
+  </mat-toolbar-row>
+</mat-toolbar>

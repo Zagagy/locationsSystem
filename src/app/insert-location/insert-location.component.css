@@ -1,0 +1,80 @@
+.insert-label {
+  font-size: 2vh;
+}
+.mat-icon {
+  float:right;
+  color:white;
+  display: flex;
+}
+
+.insert-container {
+  color: black;
+  border-radius:5px;
+  padding: 1vh;
+  height: 17.5vh;
+}
+
+.mat-list-item-content {
+  display: contents!important;
+}
+
+.next-btn-to-press {
+  background: #00906F!important;
+  border-radius: 3px!important;;
+}
+
+.btn-not-in-this-phase {
+  opacity: 0.3;
+  color:black;
+}
+
+.list-item-content {
+  width:100%;
+}
+
+.instructions-label {
+  color:white;
+}
+
+.black-label {
+  color:black!important;
+}
+
+.wizard-btn {
+  height: 8vh;
+  width:15vw;
+  background-color: #4c6faf;
+  border: none;
+  color: #FFFFFF;
+  padding: 15px 32px;
+  text-align: center;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  margin: 16px 0 !important;
+  text-decoration: none;
+  box-shadow: 0 5px 7px 0 rgba(0,0,0,0.2), 0 6px 6px 0 rgba(0,0,0,0.19);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.red-btn {
+  background: #ed6457;
+  margin-left: -5vw!important;
+}
+
+.green-btn {
+  background: #00AF86;
+  margin-left: 5vw!important;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.help-icon {
+  left: 0.5vw;
+  top: 0.7vw;
+  position: absolute;
+}

@@ -1,0 +1,39 @@
+.cardList {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top:2vh;
+  display: flex;
+  align-items: center;
+}
+/* Column Gap */
+.cardList > * {
+  box-sizing: border-box;
+}
+.cardList > *:not(:last-child) {
+  margin-right: 32px;
+}
+/* Item sizing */
+.cardListItem {
+  flex: 0 1 calc(33.3% - 32px);
+  border-radius: 5px;
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+}
+
+.markers-table-element {
+  background: #ffffff!important;
+  margin-top: 1.2vh!important;
+  border-radius: 5px!important;
+}
+
+.insert-location-element {
+  width: 99%;
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+  border: 2px solid black;
+  border-radius: 5px;
+  margin-top: 1vh;
+}
+
+.mat-grid-list {
+  overflow: hidden;
+}

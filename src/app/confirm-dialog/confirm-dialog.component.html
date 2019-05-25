@@ -1,0 +1,12 @@
+<div class="dialog-content" align="center">
+  <form [formGroup]="form">
+    <label class="are-you-sure-label">Are you Sure you want to delete the location?<br> This action cannot be undone</label>
+    <br>
+    <div mat-button class="btn" align="center" (click)="apply()">
+      Confirm
+    </div>
+    <div mat-button class="btn" align="center" (click)="cancel()">
+      Cancel
+    </div>
+  </form>
+</div>

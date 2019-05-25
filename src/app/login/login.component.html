@@ -1,0 +1,19 @@
+<mat-card id="card" style="text-align: center;">
+  <mat-card-title>
+    <img src="/assets/img/login.png" class="login-img">
+  </mat-card-title>
+
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+      <mat-form-field>
+        <input matInput placeholder="Username" formControlName="username">
+      </mat-form-field><br/>
+
+      <mat-form-field>
+        <input matInput placeholder="Password" formControlName="password">
+      </mat-form-field><br/>
+      <button mat-button mat-raised-button color="primary" type="submit" [disabled]="!form.valid" >Login</button>
+    </form>
+    <img src="/assets/img/globe.png" class="globe-ico">
+    <app-help-icon (click)="helpService.raiseHelp('login')" class="help-icon"></app-help-icon>
+</mat-card-content>

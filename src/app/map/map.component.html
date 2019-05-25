@@ -1,0 +1,7 @@
+<agm-map [streetViewControl]="false" [zoom]="3" (mapClick)="placeMarker($event)"  (mapReady)="mapReady($event)" [styles]="stylesService.getMapStyle()">
+  <agm-marker  *ngFor="let data of markers; let i = index" [latitude]="data.latitude" [longitude]="data.longitude" [id]="'marker_'+i">
+  </agm-marker>
+
+  <agm-marker *ngIf="userData.getNewMarker()" [latitude]="userData.getNewMarker().latitude" [longitude]="userData.getNewMarker().longitude" [iconUrl]="{ url: './assets/img/custom_marker.png', scaledSize: { width: 45, height: 45}}">
+  </agm-marker>
+</agm-map>

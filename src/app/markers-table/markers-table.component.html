@@ -1,0 +1,36 @@
+<app-help-icon (click)="helpService.raiseHelp('table')" class="help-icon"></app-help-icon>
+<div class="filter-header" [style.background]="stylesService.getBackgroundColor()">
+    <h3>
+      Saved Locations
+    </h3>
+    <mat-icon class="save-all-btn" title="Export to File" (click)="exportData()">save_alt</mat-icon>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  <div class="table-container mat-elevation-z8">
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="num">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef="let row; let i = index"><label class="cell-label" [title]="i">{{i+1}}</label></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="longitude">
+        <mat-header-cell *matHeaderCellDef>Longitude</mat-header-cell>
+        <mat-cell *matCellDef="let row"><label class="cell-label" [title]="row.longitude">{{row.longitude}}</label></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="latitude">
+        <mat-header-cell *matHeaderCellDef>Latitude</mat-header-cell>
+        <mat-cell *matCellDef="let row"><label class="cell-label" [title]="row.latitude">{{row.latitude}}</label></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="comment">
+        <mat-header-cell *matHeaderCellDef>Comment</mat-header-cell>
+        <mat-cell *matCellDef="let row"><label class="cell-label" [title]="row.comment">{{row.comment}}</label></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
+        <mat-cell *matCellDef="let row; let i = index"><mat-icon (click)="deleteRow(i, $event)" title="Delete location">delete</mat-icon></mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row *matRowDef="let row;let i = index; columns: displayedColumns;" (click)="rowClicked(row)" class="table-row"></mat-row>
+    </mat-table>
+  </div>

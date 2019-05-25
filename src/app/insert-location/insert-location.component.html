@@ -1,0 +1,35 @@
+<app-help-icon (click)="helpService.raiseHelp('insertLocation')" class="help-icon"></app-help-icon>
+<div class="insert-container" [style.background]="stylesService.getBackgroundColor()">
+  <label class="insert-label">Add new locations in 3 easy steps</label>
+  <mat-grid-list cols="3" rows="1" rowHeight="8rem">
+    <mat-grid-tile colspan="1" rowspan="1" *ngIf="flowService.checkMarkerSelectionState('READY')">
+      <div class="wizard-btn green-btn" align="center" (click)="start()">
+            1. Start
+        <mat-icon class="insert-icon">add_location</mat-icon>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="1" rowspan="1" *ngIf="!flowService.checkMarkerSelectionState('READY')">
+      <div class="wizard-btn green-btn" align="center" (click)="reset()">
+            Reset
+            <mat-icon class="insert-icon">undo</mat-icon>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="1" rowspan="1">
+      <div class="wizard-btn" align="center" [class.disabled]="flowService.checkMarkerSelectionState('READY')" (click)=" addComments()">
+        2. Add Comment
+        <mat-icon class="insert-icon">comment</mat-icon>
+        <br>
+        (Optional)
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="1" rowspan="1">
+      <div class="wizard-btn red-btn" align="center" [class.disabled]="!flowService.checkMarkerSelectionState('AFTER_MARKER_SELECTED')" (click)="save()">
+        3. Save
+        <mat-icon class="insert-icon">save</mat-icon>
+      </div>
+      </mat-grid-tile>
+  </mat-grid-list>
+</div>

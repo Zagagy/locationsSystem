@@ -1,0 +1,18 @@
+
+.logout-content {
+  background: whitesmoke;
+  color: black;
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+  width: 33vw;
+  left: 33vw;
+  top: 10vh;
+}
+.mat-button {
+  margin-top:2vh;
+  background-color: #00AF86;
+  color: whitesmoke;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important
+}

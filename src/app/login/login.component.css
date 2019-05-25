@@ -1,0 +1,56 @@
+
+mat-card {
+  width:30vw;
+  margin-left:33vw;
+  margin-top: 10vh;
+  padding:3vw;
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+}
+
+
+.mat-button {
+  background-color: #00AF86;
+  color: white;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.mat-button:hover {
+  opacity:0.8;
+}
+
+.mat-card-content {
+  padding:1vw;
+}
+
+.login-img {
+  width: 5vw;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+}
+
+.globe-ico {
+  position: absolute;
+  width: 5vw;
+  top: 0;
+  right: 0;
+  margin-top: -5vh;
+  margin-right: -2vw;
+}
+
+.help-icon {
+  top: 0;
+  left: 0;
+  position: absolute;
+}

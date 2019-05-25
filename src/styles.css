@@ -1,0 +1,20 @@
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+* {
+  box-sizing: border-box;
+}
+html, body { height: 100%; }
+body { margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #183442;
+  overflow:hidden;
+}
+
+.mat-grid-tile .mat-figure {
+  justify-content: center !important ;
+  align-items: flex-start !important;
+}
+
+.toast-info {
+  background-color: #4c6faf;
+}
