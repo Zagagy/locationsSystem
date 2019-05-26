@@ -12,9 +12,6 @@ import {HelpService} from '../help.service';
   styleUrls: ['./insert-location.component.css']
 })
 export class InsertLocationComponent implements OnInit {
-
-  private isBeforeSelect = true;
-
   constructor(private flowService: FlowService, private communicator: CommunicatorService,
               private dialogsService: DialogsService,
               private userDataService: UserDataService,
@@ -41,10 +38,9 @@ export class InsertLocationComponent implements OnInit {
 
   save() {
     if (this.flowService.getMarkerSelectionState() === MarkerSelectionState.AFTER_MARKER_SELECTED) {
-      this.communicator.newLocationAdded();
-      this.userDataService.addCurrentMarker();
+      const newLocation = this.userDataService.getNewMarker();
+      this.communicator.newLocationAdded(newLocation);
       this.reset();
-      this.dialogsService.showSucessToast('Location Saved Successfully');
     }
   }
 }

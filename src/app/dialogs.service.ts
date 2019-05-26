@@ -50,4 +50,7 @@ export class DialogsService {
   public showSucessToast(content) {
     this.toastr.successToastr(content, null, {position: 'top-center', animate : 'slideFromTop', enableHTML: true, toastTimeout : 3000});
   }
+  public showErrorToast(content) {
+    this.toastr.errorToastr(content, null, {position: 'top-center', animate : 'slideFromTop', enableHTML: true, toastTimeout : 3000});
+  }
 }

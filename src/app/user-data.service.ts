@@ -8,6 +8,7 @@ export class UserDataService {
   private userName: string;
   private markers;
   private customComment = '';
+  private token = '';
   private customMarker;
   private selectedTheme = 'standard';
   private dataChange: EventEmitter<number> = new EventEmitter();
@@ -28,16 +29,10 @@ export class UserDataService {
     this.markers = [];
   }
 
-  setData(userName,markers,conf) {
+  setData(userName, locations, token) {
     this.userName = userName;
-    this.markers = [
-      {longitude: '32.778919', latitude: '34.986706', comment: 'd1erdtgfterw53454qewfq34fdqwe4d23qdfqwdfqwerqweqdfqwe'},
-      {longitude: '32.783649', latitude: '34.965015', comment: 'd2'},
-      {longitude: '51.556023', latitude: '-0.279519', comment: 'd3'},
-      {longitude: '53.463058', latitude: '-2.291340', comment: 'd4'},
-      {longitude: '53.430935', latitude: '-2.960724', comment: 'd5'},
-      {longitude: '53.430935', latitude: '-2.960724', comment: 'd6'}
-    ];
+    this.markers = locations;
+    this.token = token;
   }
 
   setNewMarker(isSet: boolean, lng: any, lat: any) {
@@ -56,16 +51,23 @@ export class UserDataService {
     return this.customComment;
   }
 
-  getNewMarker() {
-    return this.customMarker;
-  }
-
   getDataChangeEmitter() {
     return this.dataChange;
   }
 
-  addCurrentMarker() {
-    this.markers.push({longitude : this.customMarker.longitude, latitude : this.customMarker.latitude, comment: this.customComment});
+  getNewMarker() {
+    let newLocationData: any;
+    if (this.customMarker) {
+      newLocationData = {
+        longitude: this.customMarker.longitude, latitude: this.customMarker.latitude,
+        comment: this.customComment
+      };
+    }
+    return newLocationData;
+  }
+
+  addMarkerLocally(newLocationData) {
+    this.markers.push(newLocationData);
     this.dataChange.emit(this.markers);
   }
 
@@ -74,6 +76,7 @@ export class UserDataService {
   }
 
   deleteLocation(rowToDelete: number) {
+    debugger;
     let location = this.markers.splice(rowToDelete, 1);
     this.dataChange.emit(this.markers);
     return location;
@@ -81,5 +84,9 @@ export class UserDataService {
 
   setNewTheme(theme: any) {
     this.selectedTheme = theme;
+  }
+
+  getToken() {
+    return this.token;
   }
 }

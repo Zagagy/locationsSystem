@@ -78,10 +78,21 @@ export class FlowService {
   }
 
   AfterConfirmDialog(isConfirmed) {
+    let location = [];
+    let isRowDeleted = true;
     if (isConfirmed && (this.deletedRowCandidate !== -1)) {
-      let location = this.userDataService.deleteLocation(this.deletedRowCandidate);
-      this.communicator.locationRemoved(location);
+      location = this.userDataService.deleteLocation(this.deletedRowCandidate);
     } else {
+      isRowDeleted = false;
+    }
+    if (location.length>0) {
+      this.communicator.locationRemoved(location[0]);
+    } else {
+      isRowDeleted = false;
+    }
+
+
+    if (isRowDeleted) {
       this.deletedRowCandidate = -1;
     }
 

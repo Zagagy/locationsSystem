@@ -12,7 +12,7 @@
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="num">
         <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
-        <mat-cell *matCellDef="let row; let i = index"><label class="cell-label" [title]="i">{{i+1}}</label></mat-cell>
+        <mat-cell *matCellDef="let row; let i = index"><label class="cell-label" [title]="i+1">{{i+1}}</label></mat-cell>
       </ng-container>
       <ng-container matColumnDef="longitude">
         <mat-header-cell *matHeaderCellDef>Longitude</mat-header-cell>
