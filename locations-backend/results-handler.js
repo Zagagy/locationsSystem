@@ -3,9 +3,11 @@ var dbHandler = require('./db-handler.js');
 
 module.exports = {
 	handleSuccessfullLogin : function(user,sessionToken,res) {
-		let locations = dbHandler.getLocations(user);
-		let answer = JSON.stringify({'isSuccess' : true, 'content' : locations, 'token' : sessionToken, 'isIdledAndLoggedOut' : false });
-	  	return res.send(answer);
+		let userDataFunc = dbHandler.getUserSpecificData(user);
+		userDataFunc.then( locations => {
+			let answer = JSON.stringify({'isSuccess' : true, 'content' : locations, 'token' : sessionToken, 'isIdledAndLoggedOut' : false });
+	  		return res.send(answer);
+	  	}).catch(error => { throw error});
 	},
 
 	handleSuccessfullAction : function(res) {

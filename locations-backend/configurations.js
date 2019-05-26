@@ -3,5 +3,9 @@ module.exports = function() {
 	this.logsFolder = '/tmp/wintego_logs';
 	this.cryptKey = 'abcdef987!';
 	this.maxIdleTime = 60 * 60 * 1000; /* one hour in ms */
-	this.timeForCrone = 2;
+	this.timeForCrone = 30;
+	this.dbServer = 'localhost';
+	this.dbUser = 'admin';
+	this.dbName = 'wintego'
+	this.dbPassword = 'benAdmin11!';
 }

@@ -15,7 +15,7 @@ var log;
 
 
 function init() {
-	console.log("Configurations loaded:\n"+JSON.stringify(config) + "\n");
+	console.log("Configurations loaded:\n");
 	handleLogging();
 	handleHttpRequests();
 	securityHandler.init(log,config);
@@ -39,7 +39,6 @@ function handleHttpRequests() {
 	app.use(bodyParser.text({ type: 'text/xml' }));
 	app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
 	app.use(bodyParser.json({ type: 'application/*+json' }));
-
 	app.post('/login',bodyParser.json(), (req, res) => {
 		try {
 		    let user = req.body.username;
@@ -48,17 +47,21 @@ function handleHttpRequests() {
 		    let ip = req.ip || req.connection.remoteAddress;
 		    ip = ip.replace('::ffff:', '');
 		    log.info('** New Connection from: user:' + user + ", password:" + password.replace(/./g, '*') + ", ip:" + ip + ", browser:" + browser);
-		    let hashedPassword = securityHandler.getHash(password,config);
-		    if (dbHandler.verifyLogin(user,hashedPassword)) {
-		    	let sessionToken = securityHandler.generateSessionToken();
-		    	securityHandler.handleNewUser(user,sessionToken);
-				log.info('** Successfull Login by user ' + user + ' , given token: ' + sessionToken);
-		    	return resultsHandler.handleSuccessfullLogin(user,sessionToken,res);
-			}
-			else {
-				log.warn('** Failed Login by user ' + user);
-		    	return resultsHandler.handleFailedAction(res);
-			}
+		    let hashedPassword = securityHandler.getHash(user,password,config);
+		    let isAuthenticatedFunc = dbHandler.verifyLogin(user,hashedPassword);
+		    isAuthenticatedFunc.then( isAuthenticated => {
+				if (isAuthenticated) {
+			    	let sessionToken = securityHandler.generateSessionToken();
+			    	securityHandler.handleNewUser(user,sessionToken);
+					log.info('** Successfull Login by user ' + user + ' , given token: ' + sessionToken);
+			    	return resultsHandler.handleSuccessfullLogin(user,sessionToken,res);
+				}
+				else {
+					log.warn('** Failed Login by user ' + user);
+			    	return resultsHandler.handleFailedAction(res);
+				}
+			}).catch(error => { throw error});
+		    
 		} catch(ex) {
 				log.error('** Exception during login - ' + ex);
 				log.error('** Exception during login - data from the user: ' + req.body);
@@ -73,17 +76,18 @@ function handleHttpRequests() {
 		    let user = securityHandler.getUser(token);
 		    if (user != null) {
 				log.info('** user ' + user + ' with token: ' + token + ' passed security check');
-		    	if (dbHandler.addLocationToUser(data,user)) {
-					log.info('** user ' + user + ' added new Location to DB');
-		    		return resultsHandler.handleSuccessfullAction(res);
-		    	}
-		    	else {
-					log.warn('** Failed inserting new location to DB by ' + user);
-		    		return resultsHandler.handleFailedAction(res);
-		    	}
+				let insertionFunc = dbHandler.addLocationToUser(data,user);
+				insertionFunc.then( isSuccess => {
+			    	if (isSuccess) {
+						log.info('** user ' + user + ' added location successfully');
+			    		return resultsHandler.handleSuccessfullAction(res);
+			    	} else {
+						log.warn('** Failed adding row for ' + user);
+			    		return resultsHandler.handleFailedAction(res);
+			    	}
+				}).catch(error => { throw error});
 		    }
-		}
-		catch(ex) {
+		} catch(ex) {
 				log.error('** Exception during insert - ' + ex);
 				log.error('** Exception during insert - data from the user: ' + req.body);
 		}
@@ -97,14 +101,16 @@ function handleHttpRequests() {
 		    let user = securityHandler.getUser(token);
 		    if (user != null) {
 				log.info('** user ' + user + ' with token: ' + token + ' passed security check');
-		    	if (dbHandler.removeLocationFromUser(data,user)) {
-					log.info('** user ' + user + ' removed a Location from the DB');
-		    		return resultsHandler.handleSuccessfullAction(res);
-		    	}
-		    	else {
-					log.warn('** Failed inserting new location to DB by ' + user);
-		    		return resultsHandler.handleFailedAction(res);
-		    	}
+				let removeFunc = dbHandler.removeLocationFromUser(data,user);
+				removeFunc.then( isSuccess => {
+			    	if (isSuccess) {
+						log.info('** user ' + user + ' removed row successfully');
+			    		return resultsHandler.handleSuccessfullAction(res);
+			    	} else {
+						log.warn('** Failed removing row for ' + user);
+			    		return resultsHandler.handleFailedAction(res);
+			    	}
+				}).catch(error => { throw error});
 		    }
 	    	else {
 				log.warn('** Failed Authentication for ' + user);
@@ -124,16 +130,18 @@ function handleHttpRequests() {
 		    let user = securityHandler.getUser(token);
 		    if (user != null) {
 				log.info('** user ' + user + ' with token: ' + token + ' passed security check');
-		    	if (dbHandler.changeThemeForUser(data,user)) {
-					log.info('** user ' + user + ' updated his theme in the DB');
-		    		return resultsHandler.handleSuccessfullAction(res);
-		    	}
-		    	else {
-					log.warn('** Failed changing Theme for ' + user);
-		    		return resultsHandler.handleFailedAction(res);
-		    	}
-		    }
-	    	else {
+				let themeChangeFunc = dbHandler.changeThemeForUser(data,user);
+				themeChangeFunc.then( isSuccess => {
+			    	if (isSuccess) {
+						log.info('** user ' + user + ' updated his theme in the DB');
+			    		return resultsHandler.handleSuccessfullAction(res);
+			    	}
+			    	else {
+						log.warn('** Failed changing Theme for ' + user);
+			    		return resultsHandler.handleFailedAction(res);
+			    	}
+					}).catch(error => { throw error});
+		    } else {
 				log.warn('** Failed Authentication for ' + user);
 	    		return resultsHandler.handleFailedAction(res);
 	    	}

@@ -15,29 +15,31 @@ module.exports = {
 		this.log.info('** Security Handler Initialized');
 		cron.schedule('*/' + this.conf['timeForCrone'] + ' * * * *', () => {
 		  this.log.info('** starting crone scheduler');
-		  let currTime = new Date();
-		  // Running task every 30 minutes to clean local dictionary from idle users:
-		  for (let i=0;i<usersLoginOrder.length;i++) {
-		  	let token = usersLoginOrder[i];
-		  	let lastSeen = this.sessionsListByToken[token]['lastSeen'];
-		  	let user = this.sessionsListByToken[token]['user']; 
-		  	if ((currTime - lastSeen) > this.conf['maxIdleTime']) {
-				this.log.warn('** last seen time of user ' + user + ' (token: '+token+' ) is more than the maximum idle time - force logout');
-				handleUserLogut(token);
-		  	}
-		  	else {
-				this.log.info('** crone is done after checking ' + i + ' users.');
-		  		break;
-		  	}
-		  }
+		  if (this.usersLoginOrder) {
+			  let currTime = new Date();
+			  // Running task every 30 minutes to clean local dictionary from idle users:
+			  for (let i=0;i<this.usersLoginOrder.length;i++) {
+			  	let token = this.usersLoginOrder[i];
+			  	let lastSeen = this.sessionsListByToken[token]['lastSeen'];
+			  	let user = this.sessionsListByToken[token]['user']; 
+			  	if ((currTime - lastSeen) > this.conf['maxIdleTime']) {
+					this.log.warn('** last seen time of user ' + user + ' (token: '+token+' ) is more than the maximum idle time - force logout');
+					this.handleUserLogut(token);
+			  	}
+			  	else {
+					this.log.info('** crone is done after checking ' + i + ' users.');
+			  		break;
+			  	}
+			  }
+		 } else { this.log.info('lists are not initialized'); }
 		  this.log.info('** crone is done until next round.');
 		});
 	},
 
-	getHash : function(pass,config) {
+	getHash : function(user,pass,config) {
 		let retVal = pass + config['cryptKey'];
 		retVal = crypto.createHash('md5').update(retVal).digest("hex");
-		this.log.info('** New Hash for Password was generated: ' + retVal);
+		this.log.info('** Hash Password generated for ' + user);
 		return retVal;
 	},
 
@@ -49,10 +51,11 @@ module.exports = {
 
 	handleUserLogut : function(token) {
 		let indexInOrderArray = this.usersLoginOrder.indexOf(token);
+		this.log.info('** Token ' + token + ' is in the #' +  indexInOrderArray + ' place of the usersLoginOrder array');
 		this.removeFromList(token);
 		this.log.info('** Token ' + token + ' removed from usersLoginOrder');
-		if (sessionsListByToken[token]) {
-			delete sessionsListByToken[token];
+		if (this.sessionsListByToken[token]) {
+			delete this.sessionsListByToken[token];
 			this.log.info('** Token ' + token + ' removed from sessionsListByToken dictionary');
 		}
 		return true;
@@ -63,9 +66,8 @@ module.exports = {
 		if (this.sessionsListByToken[token]) {
 			retVal = this.sessionsListByToken[token]['user'];
 			this.log.info('** Token ' + token + ' found, it indicates user: ' + retVal);
-			updateNewRequestTimes(token);
-		}
-		else {
+			this.updateNewRequestTimes(token);
+		} else {
 			this.log.warn('** Token ' + token + ' was not found');
 		}
 		return retVal;
@@ -75,7 +77,7 @@ module.exports = {
 		this.log.info('** Initializing user list & dictionary for user ' + user);
 		let currTime = new Date();
 		this.sessionsListByToken[token] = {'user' : user, 'lastSeen' : currTime};
-		removeFromList(token);
+		this.removeFromList(token);
 		this.usersLoginOrder.push(token);
 	},
 
