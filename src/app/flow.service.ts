@@ -39,7 +39,7 @@ export class FlowService {
   }
 
   public verifyNavigationAllowed() {
-    let userName = this.userDataService.getUserName();
+    const userName = this.userDataService.getUserName();
     if (!userName || userName === '') {
       this.login();
     }
@@ -85,7 +85,7 @@ export class FlowService {
     } else {
       isRowDeleted = false;
     }
-    if (location.length>0) {
+    if (location.length > 0) {
       this.communicator.locationRemoved(location[0]);
     } else {
       isRowDeleted = false;

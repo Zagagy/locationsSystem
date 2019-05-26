@@ -41,6 +41,7 @@ export class InsertLocationComponent implements OnInit {
       const newLocation = this.userDataService.getNewMarker();
       this.communicator.newLocationAdded(newLocation);
       this.reset();
+      this.userDataService.addMarkerLocally(newLocation);
     }
   }
 }

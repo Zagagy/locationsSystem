@@ -29,9 +29,10 @@ export class UserDataService {
     this.markers = [];
   }
 
-  setData(userName, locations, token) {
+  setData(userName, content, token) {
     this.userName = userName;
-    this.markers = locations;
+    this.markers = content.locations;
+    this.selectedTheme = content.theme;
     this.token = token;
   }
 
