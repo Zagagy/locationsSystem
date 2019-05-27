@@ -48,8 +48,7 @@ function handleHttpRequests() {
 		    ip = ip.replace('::ffff:', '');
 		    log.info('** New Connection from: user:' + user + ", password:" + password.replace(/./g, '*') + ", ip:" + ip + ", browser:" + browser);
 		    let hashedPassword = securityHandler.getHash(user,password,config);
-		    let isAuthenticatedFunc = dbHandler.verifyLogin(user,hashedPassword);
-		    isAuthenticatedFunc.then( isAuthenticated => {
+		    let loginHandler = function(isAuthenticated) {
 				if (isAuthenticated) {
 			    	let sessionToken = securityHandler.generateSessionToken();
 			    	securityHandler.handleNewUser(user,sessionToken);
@@ -60,7 +59,8 @@ function handleHttpRequests() {
 					log.warn('** Failed Login by user ' + user);
 			    	return resultsHandler.handleFailedAction(res);
 				}
-			}).catch(error => { throw error});
+		    }.bind(this);
+		    dbHandler.verifyLogin(user,hashedPassword,loginHandler);
 		    
 		} catch(ex) {
 				log.error('** Exception during login - ' + ex);
@@ -76,16 +76,16 @@ function handleHttpRequests() {
 		    let user = securityHandler.getUser(token);
 		    if (user != null) {
 				log.info('** user ' + user + ' with token: ' + token + ' passed security check');
-				let insertionFunc = dbHandler.addLocationToUser(data,user);
-				insertionFunc.then( isSuccess => {
-			    	if (isSuccess) {
+				let insertionHandler = function(isSuccess) {
+					if (isSuccess) {
 						log.info('** user ' + user + ' added location successfully');
 			    		return resultsHandler.handleSuccessfullAction(res);
 			    	} else {
 						log.warn('** Failed adding row for ' + user);
 			    		return resultsHandler.handleFailedAction(res);
 			    	}
-				}).catch(error => { throw error});
+				};
+				dbHandler.addLocationToUser(data,user,insertionHandler);
 		    }
 		} catch(ex) {
 				log.error('** Exception during insert - ' + ex);
@@ -101,8 +101,7 @@ function handleHttpRequests() {
 		    let user = securityHandler.getUser(token);
 		    if (user != null) {
 				log.info('** user ' + user + ' with token: ' + token + ' passed security check');
-				let removeFunc = dbHandler.removeLocationFromUser(data,user);
-				removeFunc.then( isSuccess => {
+				let removalHandler = function(isSuccess) {
 			    	if (isSuccess) {
 						log.info('** user ' + user + ' removed row successfully');
 			    		return resultsHandler.handleSuccessfullAction(res);
@@ -110,7 +109,8 @@ function handleHttpRequests() {
 						log.warn('** Failed removing row for ' + user);
 			    		return resultsHandler.handleFailedAction(res);
 			    	}
-				}).catch(error => { throw error});
+				};
+				dbHandler.removeLocationFromUser(data,user,removalHandler);
 		    }
 	    	else {
 				log.warn('** Failed Authentication for ' + user);
@@ -130,8 +130,7 @@ function handleHttpRequests() {
 		    let user = securityHandler.getUser(token);
 		    if (user != null) {
 				log.info('** user ' + user + ' with token: ' + token + ' passed security check');
-				let themeChangeFunc = dbHandler.changeThemeForUser(data,user);
-				themeChangeFunc.then( isSuccess => {
+				let themeUpdateHandler = function(isSuccess) {
 			    	if (isSuccess) {
 						log.info('** user ' + user + ' updated his theme in the DB');
 			    		return resultsHandler.handleSuccessfullAction(res);
@@ -140,7 +139,8 @@ function handleHttpRequests() {
 						log.warn('** Failed changing Theme for ' + user);
 			    		return resultsHandler.handleFailedAction(res);
 			    	}
-					}).catch(error => { throw error});
+				};
+				dbHandler.changeThemeForUser(data,user,themeUpdateHandler);
 		    } else {
 				log.warn('** Failed Authentication for ' + user);
 	    		return resultsHandler.handleFailedAction(res);
@@ -158,7 +158,7 @@ function handleHttpRequests() {
 		    let user = securityHandler.getUser(token);
 		    if (user != null) {
 				log.info('** user ' + user + ' with token: ' + token + ' passed security check');
-		    	if (securityHandler.handleUserLogut(token)) {
+				if (securityHandler.handleUserLogut(token)) {
 					log.info('** user ' + user + ' was successuflly logged out of the system');
 		    		return resultsHandler.handleSuccessfullAction(res);
 		    	}

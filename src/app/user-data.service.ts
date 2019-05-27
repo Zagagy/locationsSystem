@@ -77,7 +77,6 @@ export class UserDataService {
   }
 
   deleteLocation(rowToDelete: number) {
-    debugger;
     let location = this.markers.splice(rowToDelete, 1);
     this.dataChange.emit(this.markers);
     return location;

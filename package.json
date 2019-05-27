@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-all": "ng build wintego && ng build",
+    "build-all-prod": "ng build wintego --prod && ng build --prod"
   },
   "private": true,
   "dependencies": {
