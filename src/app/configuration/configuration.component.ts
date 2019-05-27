@@ -16,6 +16,10 @@ import {HelpService} from '../help.service';
 export class ConfigurationComponent implements OnInit {
   private theme = 'standard';
 
+  form: FormGroup = new FormGroup({
+    confirm: new FormControl('')
+  });
+
   constructor(private userDataService: UserDataService, private dialogRef: MatDialogRef<ConfirmDialogComponent>,
               private stylesService: StylesService, private communicatorService: CommunicatorService, private helpService: HelpService) {
     this.theme = this.userDataService.getTheme();
@@ -23,10 +27,6 @@ export class ConfigurationComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  form: FormGroup = new FormGroup({
-    confirm: new FormControl('')
-  });
 
   setTheme(themeName) {
     this.theme = themeName;

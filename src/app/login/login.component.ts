@@ -22,7 +22,7 @@ export class LoginComponent {
     if ((this.form.valid) && (this.form.value.username !== '') && (this.form.value.password !== '')) {
       this.communicator.login(this.form.value);
     } else {
-      this.dialogsService.showErrorToast('Please type valid username and password before proceeding');
+      this.dialogsService.showErrorToast('Invalid credentials, please try again');
     }
   }
 }

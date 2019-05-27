@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
     if (this.flowService.getMarkerSelectionState() !== MarkerSelectionState.READY) {
       this.userData.setNewMarker(true, $event.coords.lng, $event.coords.lat);
       this.flowService.setMarkerSelectionState(MarkerSelectionState.AFTER_MARKER_SELECTED);
-      this.dialogsService.showSucessToast('New Marker Applied');
+      this.dialogsService.showSucessToast('New location applied');
     }
   }
 

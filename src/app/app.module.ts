@@ -71,6 +71,7 @@ import { HelpIconComponent } from './help-icon/help-icon.component';
     HttpClientModule,
     BsTableModule,
     FlexLayoutModule,
+    HttpClientModule,
     ToastrModule.forRoot(),
     MatRippleModule,
     AgmCoreModule.forRoot({

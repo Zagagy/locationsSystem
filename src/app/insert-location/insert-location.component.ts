@@ -24,7 +24,7 @@ export class InsertLocationComponent implements OnInit {
   start() {
     if (this.flowService.getMarkerSelectionState() === MarkerSelectionState.READY) {
       this.flowService.setMarkerSelectionState(MarkerSelectionState.BEFORE_MARKER_SELECTED);
-      this.dialogsService.showInfoToast('Select Your desired Location on the Map');
+      this.dialogsService.showInfoToast('Select Your desired location on the nap');
     }
   }
 

@@ -44,7 +44,7 @@ export class CommunicatorService {
   logout() {
     const  params = {token : this.userDataService.getToken()};
     this.httpClient.post<PostRepsonse>(this.backendURL + 'logout',  params).subscribe(data  => {
-      this.toastr.successToastr('You are not logged out of the system', null
+      this.toastr.successToastr('You are logged out of the system', null
         , {position: 'top-center', animate : 'slideFromTop', enableHTML: true, toastTimeout : 3000});
     });
 
@@ -94,12 +94,12 @@ export class CommunicatorService {
   }
 
   failedLoginMsg() {
-    this.toastr.errorToastr('Login Failed, either Username or Password are NOT correct',
+    this.toastr.errorToastr('Login failed, either username or password are NOT correct',
       null, {position: 'top-center', animate : 'slideFromTop', enableHTML: true, toastTimeout : 3000});
   }
 
   failedSavingInDBMsg() {
-    this.toastr.errorToastr('Cannot update Data on the cloud, Please contact the helpdesk for further information',
+    this.toastr.errorToastr('Cannot update data on the cloud, Please contact the helpdesk for further information',
       null, {position: 'top-center', animate : 'slideFromTop', enableHTML: true, toastTimeout : 3000});
   }
 

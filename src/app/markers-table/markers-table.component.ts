@@ -46,7 +46,7 @@ export class MarkersTableComponent implements OnInit {
     }
   }
 
-  private deleteRow(index, event) {
+  deleteRow(index, event) {
     event.stopPropagation();
     this.flowService.setDeleteRowCandidate(index);
     this.dialogsService.openDeleteMarkerDialog();
